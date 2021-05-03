@@ -1,2 +1,19 @@
-# php_demon_thinkphp_admin
-通用PHP-ADMIN-THINKPHP快速开发库
+# PHP Demon Admin Library For ThinkPHP
+
+## 服务说明
+
+本服务仅支持ThinkPHP6+
+
+正常来说是内部开发使用的，外部使用也可以（水平有限，请慎用，可能会有漏洞或者性能问题）
+
+使用的Bootstrap4作为基础前端框架，jQuery版本为3.5
+
+## 特殊申明
+
+本库已发布至Composer，理论上只内部使用，如有问题请自行解决，概不提供服务
+
+最终解释权归魔网天创信息科技:尘兵所属
+
+## 备注
+
+正在开发中......
