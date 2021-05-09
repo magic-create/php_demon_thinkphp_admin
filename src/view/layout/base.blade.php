@@ -19,7 +19,7 @@
     {{--PHP配置给JS--}}
     <script>
         window._debug = Boolean({!!env('app.debug')!!});
-        window._locale = '{{app()->lang->getLangSet()}}';
+        window._locale = '{{app('admin.translation')->upper()}}';
         window._layout = '{{config('admin.layout')}}';
         window._theme = '{{config('admin.theme')}}';
         window._token = '{{function_exists('token') ? token() : ''}}';
@@ -46,7 +46,7 @@
     {{--启动应用--}}
     <script src="{{admin_static('js/app.js')}}"></script>
     <script src="{{admin_static('js/demon.min.js')}}"></script>
-    <script src="{{admin_static('js/lang/'.app()->lang->getLangSet().'.js')}}"></script>
+    <script src="{{admin_static('js/lang/'.app('admin.translation')->upper().'.js')}}"></script>
     {{--从配置项循环加载--}}
     @foreach(config('admin.js',[]) as $item)
         <script src="{{$item}}"></script>

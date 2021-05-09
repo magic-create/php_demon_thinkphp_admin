@@ -67,4 +67,21 @@ class Translation extends Lang
     {
         return parent::parse($file);
     }
+
+    /**
+     * 将后置调整为大写
+     *
+     * @param string $name
+     *
+     * @return array
+     * @author    ComingDemon
+     * @copyright 魔网天创信息科技
+     */
+    public function upper($name = '')
+    {
+        $name = $name ? : $this->getLangSet();
+        $list = explode('-', $name);
+
+        return $list[0] . (count($list) > 1 ? '-' . strtoupper($list[1]) : '');
+    }
 }

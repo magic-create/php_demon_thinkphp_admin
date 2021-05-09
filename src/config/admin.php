@@ -37,8 +37,8 @@ return [
     //  使用语言
     'locales' => [
         'en' => 'English',
-        'zh-CN' => '简体中文',
-        'zh-TW' => '繁體中文',
+        'zh-cn' => '简体中文',
+        'zh-tw' => '繁體中文',
     ],
     //  Session
     'session' => [
@@ -49,7 +49,7 @@ return [
         // 存储连接标识 当type使用cache的时候有效
         'store' => env('ADMIN.ADMIN_SESSION_STORE', null),
         // 过期时间
-        'expire' => env('ADMIN.ADMIN_SESSION_EXPIRE', 1440),
+        'expire' => env('ADMIN.ADMIN_SESSION_EXPIRE', 7200),
         // 前缀
         'prefix' => env('ADMIN.ADMIN_SESSION_PREFIX', 'admin'),
         // 路径
