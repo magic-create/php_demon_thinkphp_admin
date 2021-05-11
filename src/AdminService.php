@@ -6,6 +6,7 @@ use Demon\AdminThinkPHP\support\Publish;
 use Demon\AdminThinkPHP\support\Taglib;
 use Demon\AdminThinkPHP\support\Translation;
 use Demon\AdminThinkPHP\support\blade\BladeInstance;
+use think\helper\Str;
 use think\Service;
 use Demon\AdminThinkPHP\command;
 
@@ -30,7 +31,8 @@ class AdminService extends Service
         $config[$connection]['query'] = 'Demon\AdminThinkPHP\support\Query';
         $this->app->config->set(['connections' => $config], 'database');
         //  加载路由
-        $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR . 'route.php');
+        if (!$this->app->runningInConsole() && strpos($this->app->request->server('REQUEST_URI'), '/' . config('admin.path')) === 0)
+            $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR . 'route.php');
         //  加载命令
         $this->commands([command\Publish::class, command\Database::class, command\Reset::class]);
         $this->app->bind('admin.publish', Publish::class);
@@ -127,7 +129,7 @@ class AdminService extends Service
      */
     protected function loadViewsFrom($path, $namespace)
     {
-        $this->app->bind('admin.view', function() { return new BladeInstance(root_path('demon/admin-thinkphp/src/view'), root_path('runtime/admin/view')); });
+        $this->app->bind('admin.view', function() { return new BladeInstance(root_path('view/admin'), root_path('runtime/admin/view')); });
         app('admin.view')->addNamespace($namespace, $path);
     }
 

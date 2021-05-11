@@ -37,7 +37,7 @@
    ```
    需要在配置文件(一般为config/app.php)的中调整app_map为类似以下内容
    'app_map' => [
-       env('ADMIN_PATH', 'admin') => 'admin',
+       env('ADMIN.ADMIN_PATH', 'admin') => 'admin',
        'api' => 'api',
        '*' => 'web'
    ],
