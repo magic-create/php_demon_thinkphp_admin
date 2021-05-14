@@ -31,9 +31,9 @@ class AuthController extends Controller
         if (DEMON_SUBMIT) {
             //  验证参数
             $data = $this->api->arguer([
-                'account' => ['name' => app('admin')->__('base.auth.account'), 'rule' => 'required|string', 'message' => app('admin')->__('base.auth.error_account')],
-                'password' => ['name' => app('admin')->__('base.auth.password'), 'rule' => 'required|string', 'message' => app('admin')->__('base.auth.error_password')],
-                'captcha' => ['name' => app('admin')->__('base.auth.captcha'), 'rule' => 'required|in:' . app('admin')->captcha(), 'message' => app('admin')->__('base.auth.error_captcha')]
+                'account' => ['name' => app('admin')->__('base.auth.account'), 'rule' => 'require', 'message' => app('admin')->__('base.auth.error_account')],
+                'password' => ['name' => app('admin')->__('base.auth.password'), 'rule' => 'require', 'message' => app('admin')->__('base.auth.error_password')],
+                'captcha' => ['name' => app('admin')->__('base.auth.captcha'), 'rule' => 'require|in:' . app('admin')->captcha(), 'message' => app('admin')->__('base.auth.error_captcha')]
             ]);
             //  验证登录
             $user = $this->api->check(UserModel::password('username', $data['account'], $data['password']));

@@ -27,7 +27,7 @@ class RoleModel extends BaseModel
     {
         $model = new self();
 
-        return DB::connect($model->getConnectionName())->getColumnListing($model->getTable());
+        return DB::connect($model->getConnection())->table($model->getTable())->getColumnListing();
     }
 
     public static function updateStatus($rid, $status)
@@ -42,7 +42,7 @@ class RoleModel extends BaseModel
     {
         $store = self::fieldStore();
         $reData = app('admin')->api->validator([
-            'name' => ['rule' => 'required|string|min:2|max:64'],
+            'name' => ['rule' => 'require|min:2|max:64'],
         ], [], [], $data);
         if (!error_check($reData))
             return $reData;

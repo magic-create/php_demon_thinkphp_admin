@@ -113,7 +113,7 @@ class Service
      */
     public static function fieldList()
     {
-        return DB::connect($connection)->getColumnListing(self::MasterModel);
+        return DB::connect($connection)->table(self::MasterModel)->getColumnListing();
     }
 
     /**
@@ -203,11 +203,11 @@ class Service
         $store = self::fieldStore();
         $data['intro'] = arguer('intro', null, 'xss', $data);
         $reData = app('admin')->api->validator([
-            'nickname' => ['rule' => 'required|string|min:2|max:16', 'message' => '请输入2至16个字的用户昵称'],
-            'level' => ['rule' => 'required|numeric|in:' . implode(',', array_keys($store['level'])), 'message' => '请选择正确的等级'],
-            'sex' => ['rule' => 'required|numeric|in:' . implode(',', array_keys($store['sex'])), 'message' => '请选择正确的性别'],
-            'birthday' => ['rule' => 'required|date', 'message' => '请输入正确的生日'],
-            'intro' => ['rule' => 'required|string', 'message' => '请输入正确的简介'],
+            'nickname' => ['rule' => 'require|min:2|max:16', 'message' => '请输入2至16个字的用户昵称'],
+            'level' => ['rule' => 'require|number|in:' . implode(',', array_keys($store['level'])), 'message' => '请选择正确的等级'],
+            'sex' => ['rule' => 'require|number|in:' . implode(',', array_keys($store['sex'])), 'message' => '请选择正确的性别'],
+            'birthday' => ['rule' => 'require|date', 'message' => '请输入正确的生日'],
+            'intro' => ['rule' => 'require|string', 'message' => '请输入正确的简介'],
         ], [], [], $data);
         if (!error_check($reData))
             return $reData;

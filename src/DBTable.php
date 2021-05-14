@@ -736,7 +736,7 @@ class DBTable
                             case '<':
                             case '<=':
                             default:
-                                $where[] = [$val->data, $val->where, $val->value];
+                                $where[] = [$val->data, $val->where == '!=' ? '<>' : $val->where, $val->value];
                                 break;
                         }
                     }
@@ -924,7 +924,7 @@ class DBTable
         //  生成脚本
         $content = $content ? : new HtmlString(sprintf($this->template('script'), $this->config->namespace, $this->config->id ?? 'dbTable', json_encode($this->config), implode(';', $events)));
         //  脚本执行后是否删除
-        if (!env('app.debug'))
+        if (!app()->isDebug())
             $content .= '$(function(){$("#dbTableScript").remove()})';
 
         //  返回视图文本
@@ -1046,7 +1046,7 @@ class DBTable
         //  获取总数
         $time = mstime();
         $data = [$this->config->totalField => $this->count()];
-        if (env('app.debug')) {
+        if (app()->isDebug()) {
             $data['_query'] = [$this->config->totalField => !$this->static ? $this->toSql() : null];
             $data['_time'] = [$this->config->totalField => (mstime() - $time) . 'ms'];
         }
@@ -1054,20 +1054,20 @@ class DBTable
         $time = mstime();
         if (!$this->static && $statis = $this->getStatis($this->query)) {
             $data['statis'] = $statis;
-            if (env('app.debug'))
+            if (app()->isDebug())
                 $data['_time']['statis'] = (mstime() - $time) . 'ms';
         }
         //  获取数据
         $time = mstime();
         $data[$this->config->dataField] = $this->get(2);
-        if (env('app.debug')) {
+        if (app()->isDebug()) {
             $data['_query'][$this->config->dataField] = !$this->static ? $this->toSql() : null;
             $data['_time'][$this->config->dataField] = (mstime() - $time) . 'ms';
         }
         //  处理数据
         $time = mstime();
         $data[$this->config->dataField] = $this->getFormat();
-        if (env('app.debug'))
+        if (app()->isDebug())
             $data['_time']['format'] = (mstime() - $time) . 'ms';
         //  附加数据
         $data += $this->setWith();
@@ -1101,7 +1101,7 @@ class DBTable
      */
     public function get($step = 1)
     {
-        $list = $this->static ? $this->data : $this->data = $this->getQuery($step)->field(array_values($this->field))->get();
+        $list = $this->static ? $this->data : $this->data = $this->getQuery($step)->field(array_values($this->field))->select();
 
         return $this->data = ($this->object ? $this->static ? array_to_object($list) : json_decode($list->toJson()) : $list);
     }

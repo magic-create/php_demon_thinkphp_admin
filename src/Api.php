@@ -96,7 +96,7 @@ class Api
         $field = [];
         foreach ($list as $key => $val) {
             if (is_string($val)) {
-                $rules[$key] = 'required';
+                $rules[$key] = 'require';
                 $messages[$key . '.*'] = $val;
             }
             if (is_array($val) && ($val['name'] ?? ''))
@@ -110,9 +110,16 @@ class Api
                 else $messages[$key] = $val['message'];
             }
         }
+        //  生成标题
+        foreach ($rules as $key => $val) {
+            if (isset($field[$key])) {
+                $rules["{$key}|{$field[$key]}"] = $val;
+                unset($rules[$key]);
+            }
+        }
         //  开始验证
         try {
-            (new Validate())->failException(true)->message($messages)->only($field)->check($origin, $rules);
+            (new Validate())->failException(true)->message($messages)->check($origin, $rules);
         } catch (ValidateException $e) {
             //  返回错误异常
             return error_build($this->default, $e->getMessage());

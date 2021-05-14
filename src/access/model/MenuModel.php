@@ -28,7 +28,7 @@ class MenuModel extends BaseModel
     {
         $model = new self();
 
-        return DB::connect($model->getConnectionName())->getColumnListing($model->getTable());
+        return DB::connect($model->getConnection())->table($model->getTable())->getColumnListing();
     }
 
     public static function updateStatus($mid, $status)
@@ -70,7 +70,7 @@ class MenuModel extends BaseModel
     {
         $store = self::fieldStore();
         $reData = app('admin')->api->validator([
-            'type' => ['rule' => 'required|string|in:' . implode(',', array_keys($store['type'])), 'name' => app('admin')->access->getLang('type')],
+            'type' => ['rule' => 'require|in:' . implode(',', array_keys($store['type'])), 'name' => app('admin')->access->getLang('type')],
         ], [], [], $data);
         if (!error_check($reData))
             return $reData;
@@ -91,7 +91,7 @@ class MenuModel extends BaseModel
             $refer = $store['parent']->where('upId', $reData['upId'])->sortBy('weight')->first();
         }
         if ($reData['path']) {
-            $uniquePath = self::where('path', $reData['path'])->where('mid', '!=', $info['mid'] ?? 0)->first();
+            $uniquePath = self::where('path', $reData['path'])->where('mid', '<>', $info['mid'] ?? 0)->first();
             if ($uniquePath)
                 return error_build(DEMON_CODE_PARAM, app('admin')->access->getLang('error_path_unique'));
         }

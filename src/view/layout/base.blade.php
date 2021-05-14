@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="{{admin_static('images/favicon.ico')}}">
     {{--PHP配置给JS--}}
     <script>
-        window._debug = Boolean({!!env('app.debug')!!});
+        window._debug = Boolean({!!app()->isDebug()!!});
         window._locale = '{{app('admin.translation')->upper()}}';
         window._layout = '{{config('admin.layout')}}';
         window._theme = '{{config('admin.theme')}}';

@@ -35,13 +35,11 @@
    ```
 4. 多应用模式下参数调整（指安装了topthink/think-multi-app）
    ```
-   需要在配置文件(一般为config/app.php)的中调整app_map为类似以下内容
+   需要在配置文件(一般为config/app.php)的中为app_map增加内容如下
+   'app_express' => true, // 如果不需要开启应用快速访问请设置为false
    'app_map' => [
-       env('ADMIN.ADMIN_PATH', 'admin') => 'admin',
-       'api' => 'api',
-       '*' => 'web'
+       env('ADMIN.ADMIN_PATH', 'admin') => 'admin'
    ],
-   其中admin为本库入口，api为例子，*表示默认应用
    ```
 
 ## 安装说明

@@ -2,7 +2,6 @@
 
 namespace Demon\AdminThinkPHP\support;
 
-use Demon\AdminThinkPHP\DB;
 use Illuminate\Support\Collection;
 use think\db\BaseQuery;
 use think\db\exception\DataNotFoundException;
@@ -87,14 +86,12 @@ class Query extends \think\db\Query
     /**
      * 获取字段列表
      *
-     * @param $table
-     *
      * @return array
      * @author    ComingDemon
      * @copyright 魔网天创信息科技
      */
-    public function getColumnListing($table)
+    public function getColumnListing()
     {
-        return array_keys($this->getFields($table));
+        return array_keys($this->getFields($this->getOptions('table')));
     }
 }

@@ -25,17 +25,17 @@ class Controller extends Controllers
             $this->api->arguer([
                 'account' => [
                     'name' => app('admin')->__('base.auth.account'),
-                    'rule' => 'required|string|in:admin',
+                    'rule' => 'require|in:admin',
                     'message' => app('admin')->__('base.auth.error_account')
                 ],
                 'password' => [
                     'name' => app('admin')->__('base.auth.password'),
-                    'rule' => 'required|string|size:32|in:' . bomber()->md5('demon', false),
+                    'rule' => 'require|size:32|in:' . bomber()->md5('demon', false),
                     'message' => app('admin')->__('base.auth.error_password')
                 ],
                 'captcha' => [
                     'name' => app('admin')->__('base.auth.captcha'),
-                    'rule' => 'required|in:' . app('admin')->captcha(),
+                    'rule' => 'require|in:' . app('admin')->captcha(),
                     'message' => app('admin')->__('base.auth.error_captcha')
                 ]
             ]);
@@ -184,8 +184,8 @@ class Controller extends Controllers
             //  积分
             case 'credit':
                 $parm = $this->api->arguer([
-                    'uid' => ['rule' => 'required|numeric', 'message' => '请选择正确的用户'],
-                    'type' => ['rule' => 'required|numeric', 'message' => '请选择正确的类型'],
+                    'uid' => ['rule' => 'require|number', 'message' => '请选择正确的用户'],
+                    'type' => ['rule' => 'require|number', 'message' => '请选择正确的类型'],
                 ]);
                 $info = Service::find($parm['uid']);
                 if (!$info)
@@ -264,7 +264,7 @@ class Controller extends Controllers
     {
         if (DEMON_SUBMIT) {
             $data = arguer();
-            $validator = validator($data, ['api' => 'required']);
+            $validator = validator($data, ['api' => 'require']);
             if ($validator->fails())
                 return response($validator->errors()->toArray(), DEMON_CODE_PARAM);
 

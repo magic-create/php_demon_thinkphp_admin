@@ -28,7 +28,7 @@ class UserModel extends BaseModel
     {
         $model = new self();
 
-        return DB::connect($model->getConnectionName())->getColumnListing($model->getTable());
+        return DB::connect($model->getConnection())->table($model->getTable())->getColumnListing();
     }
 
     public static function findAndRids($uid)
@@ -51,7 +51,7 @@ class UserModel extends BaseModel
     public static function checkInfo($data = [], $info = [])
     {
         $reData = app('admin')->api->validator([
-            'username' => ['rule' => 'required|string|min:2|max:32'],
+            'username' => ['rule' => 'require|min:2|max:32'],
         ], [], [], $data);
         if (!error_check($reData))
             return $reData;
@@ -63,7 +63,7 @@ class UserModel extends BaseModel
         else
             unset($reData['password']);
         if ($reData['username']) {
-            $uniqueUsername = self::where('username', $reData['username'])->where('uid', '!=', $info['uid'] ?? 0)->first();
+            $uniqueUsername = self::where('username', $reData['username'])->where('uid', '<>', $info['uid'] ?? 0)->first();
             if ($uniqueUsername)
                 return error_build(DEMON_CODE_PARAM, app('admin')->access->getLang('error_username_unique'));
         }
