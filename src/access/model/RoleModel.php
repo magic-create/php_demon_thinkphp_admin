@@ -8,8 +8,8 @@ class RoleModel extends BaseModel
 {
     public function __initialize()
     {
-        $this->table = 'admin_role';
-        $this->primaryKey = 'rid';
+        $this->name = 'admin_role';
+        $this->pk = 'rid';
         parent::__initialize();
     }
 
@@ -21,13 +21,6 @@ class RoleModel extends BaseModel
         ];
 
         return $field ? ($store[$field] ?? null) : $store;
-    }
-
-    public static function fieldList()
-    {
-        $model = new self();
-
-        return DB::connect($model->getConnection())->table($model->getTable())->getColumnListing();
     }
 
     public static function updateStatus($rid, $status)
@@ -53,7 +46,7 @@ class RoleModel extends BaseModel
         }
         $reData['mids'] = $reData['mids'] ? : null;
         $reData['remark'] = $reData['remark'] ? : null;
-        $field = self::fieldList();
+        $field = self::getColumnListing();
         foreach ($reData as $key => $val) {
             if (!in_array($key, $field))
                 unset($reData[$key]);

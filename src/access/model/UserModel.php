@@ -9,7 +9,7 @@ class UserModel extends BaseModel
 {
     public function __initialize()
     {
-        $this->table = 'admin_user';
+        $this->name = 'admin_user';
         $this->pk = 'uid';
         parent::__initialize();
     }
@@ -22,13 +22,6 @@ class UserModel extends BaseModel
         ];
 
         return $field ? ($store[$field] ?? null) : $store;
-    }
-
-    public static function fieldList()
-    {
-        $model = new self();
-
-        return DB::connect($model->getConnection())->table($model->getTable())->getColumnListing();
     }
 
     public static function findAndRids($uid)
@@ -67,7 +60,7 @@ class UserModel extends BaseModel
             if ($uniqueUsername)
                 return error_build(DEMON_CODE_PARAM, app('admin')->access->getLang('error_username_unique'));
         }
-        $field = self::fieldList();
+        $field = self::getColumnListing();
         foreach ($reData as $key => $val) {
             if (!in_array($key, $field))
                 unset($reData[$key]);

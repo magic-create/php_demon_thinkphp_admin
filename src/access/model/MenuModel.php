@@ -8,8 +8,8 @@ class MenuModel extends BaseModel
 {
     public function __initialize()
     {
-        $this->table = 'admin_menu';
-        $this->primaryKey = 'mid';
+        $this->name = 'admin_menu';
+        $this->pk = 'mid';
         parent::__initialize();
     }
 
@@ -22,13 +22,6 @@ class MenuModel extends BaseModel
         ];
 
         return $field ? ($store[$field] ?? null) : $store;
-    }
-
-    public static function fieldList()
-    {
-        $model = new self();
-
-        return DB::connect($model->getConnection())->table($model->getTable())->getColumnListing();
     }
 
     public static function updateStatus($mid, $status)
@@ -95,7 +88,7 @@ class MenuModel extends BaseModel
             if ($uniquePath)
                 return error_build(DEMON_CODE_PARAM, app('admin')->access->getLang('error_path_unique'));
         }
-        $field = self::fieldList();
+        $field = self::getColumnListing();
         foreach ($reData as $key => $val) {
             if (!in_array($key, $field))
                 unset($reData[$key]);

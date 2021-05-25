@@ -6,8 +6,8 @@ class LogModel extends BaseModel
 {
     public function __initialize()
     {
-        $this->table = 'admin_log';
-        $this->primaryKey = 'lid';
+        $this->name = 'admin_log';
+        $this->pk = 'lid';
         parent::__initialize();
     }
 

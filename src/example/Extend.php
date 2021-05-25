@@ -69,7 +69,7 @@ class Extend extends Controllers
         $response = [];
         foreach ($_FILES as $key => $file) {
             $name = $file['name'] . '.' . sha1(mstime() . $file['name']) . '.' . str_replace('image/', '', $file['type']);
-            $response[$key] = move_uploaded_file($file['tmp_name'], $path . '/' . $name) ? url($dir . '/' . $name) : false;
+            $response[$key] = move_uploaded_file($file['tmp_name'], $path . '/' . $name) ? url('/' . $dir . '/' . $name, [], false, true)->build() : false;
         }
 
         return response($response);

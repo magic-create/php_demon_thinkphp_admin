@@ -6,7 +6,7 @@ class AllotModel extends BaseModel
 {
     public function __initialize()
     {
-        $this->table = 'admin_allot';
+        $this->name = 'admin_allot';
         parent::__initialize();
     }
 
