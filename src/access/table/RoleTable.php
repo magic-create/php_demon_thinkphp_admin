@@ -53,7 +53,7 @@ class RoleTable extends DBTable
 
     public function setQuery()
     {
-        return new RoleModel;
+        return (new RoleModel)->newQuery();
     }
 
     public function setFormat()

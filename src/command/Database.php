@@ -242,7 +242,7 @@ EOF;
             case 'admin_menu':
                 $sql = <<<EOF
 CREATE TABLE IF NOT EXISTS `admin_menu` (
-  `mid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '角色RID',
+  `mid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '菜单MID',
   `type` enum('menu','page','action') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类型(menu:菜单,page:页面,action:操作)',
   `upId` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父级ID',
   `title` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '标题',
@@ -263,7 +263,7 @@ EOF;
                 $this->db->query($sql);
                 $this->db->table($table)
                   ->insertAll([
-                      ['mid' => 1, 'type' => 'page', 'upId' => 0, 'title' => '__base.menu.dashboard', 'path' => '/', 'icon' => 'fa fa-tachometer-alt', 'weight' => 10000, 'system' => 1, 'createTime' => mstime()],
+                      ['mid' => 1, 'type' => 'page', 'upId' => 0, 'title' => '__base.menu.dashboard', 'path' => null, 'icon' => 'fa fa-tachometer-alt', 'weight' => 10000, 'system' => 1, 'createTime' => mstime()],
                       ['mid' => 2, 'type' => 'menu', 'upId' => 0, 'title' => '__base.menu.admin', 'path' => null, 'icon' => 'fa fa-server', 'weight' => 0, 'system' => 1, 'createTime' => mstime()],
                       ['mid' => 3, 'type' => 'menu', 'upId' => 2, 'title' => '__base.menu.admin_access', 'path' => null, 'icon' => 'fa fa-memory', 'weight' => 0, 'system' => 1, 'createTime' => mstime()],
                       ['mid' => 4, 'type' => 'page', 'upId' => 3, 'title' => '__base.menu.admin_access_user', 'path' => 'admin/access/user', 'icon' => 'fa fa-user-tie', 'weight' => 0, 'system' => 1, 'createTime' => mstime()],
