@@ -89,9 +89,9 @@ class UserModel extends BaseModel
             return error_build(DEMON_CODE_PARAM);
         $user = self::where($type, $account)->first();
         if (!$user || $user->{$type} != $account || $user->status < 1)
-            return error_build(DEMON_CODE_PARAM, app('admin')->__('admin::base.auth.error_account'));
+            return error_build(DEMON_CODE_PARAM, app('admin')->__('base.auth.error_account'));
         if (!bomber()->password(['action' => 'verify', 'hash' => $user->password, 'content' => $password]))
-            return error_build(DEMON_CODE_COND, app('admin')->__('admin::base.auth.error_password'));
+            return error_build(DEMON_CODE_COND, app('admin')->__('base.auth.error_password'));
 
         return $user;
     }

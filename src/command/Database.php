@@ -242,7 +242,7 @@ EOF;
             case 'admin_menu':
                 $sql = <<<EOF
 CREATE TABLE IF NOT EXISTS `admin_menu` (
-  `mid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '角色RID',
+  `mid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '菜单MID',
   `type` enum('menu','page','action') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类型(menu:菜单,page:页面,action:操作)',
   `upId` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父级ID',
   `title` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '标题',

@@ -26,7 +26,7 @@ class SettingController extends Controller
     public function logout()
     {
         //  移除用户信息
-        session(['uid' => 0]);
+        session('uid', null);
         //  记录标记
         app('admin')->log->setTag('auth.logout');
 
@@ -81,7 +81,8 @@ class SettingController extends Controller
     public function clear()
     {
         //  清理缓存
-        Console::call('clear');
+        Console::call('clear', ['--cache', '--dir']);
+        bomber()->dirClear(root_path('runtime/admin/view'), false);
         //  清理Opcache
         if (ini_get('opcache.enable'))
             opcache_reset();

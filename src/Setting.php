@@ -395,6 +395,6 @@ class Setting
      */
     public function render($view, $module, $data = [], $mergeData = [])
     {
-        return app('admin.view')->make($view, $data, $mergeData)->with('list', self::get($module))->render();
+        return app('admin.view')->make(mb_stripos($view, 'admin::') === false ? 'admin::' . $view : $view, $data, $mergeData)->with('list', self::get($module))->render();
     }
 }

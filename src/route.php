@@ -3,6 +3,7 @@
 use Demon\AdminThinkPHP\access\middleware\LogSave;
 use Demon\AdminThinkPHP\access\middleware\SessionPost;
 use Demon\AdminThinkPHP\access\middleware\SessionPre;
+use think\exception\FuncNotFoundException;
 use think\exception\HttpException;
 use think\exception\ErrorException;
 use think\Exception;
@@ -33,12 +34,12 @@ Route::group(!app('admin')->multi ? config('admin.path') : '', function() {
                 //  运行返回
                 return app()->invoke([$controller, $act]);
             }
-            else abort(DEMON_CODE_NONE);
+            else abort(DEMON_CODE_NONE, admin_error(DEMON_CODE_NONE));
         } catch (HttpException $exception) {
             if (!DEMON_INAJAX && !DEMON_SUBMIT && !app()->isDebug())
                 return admin_view('preset.error.general', ['code' => $exception->getStatusCode(), 'message' => $exception->getMessage()]);
             throw $exception;
-        } catch (Exception | ErrorException $exception) {
+        } catch (Exception | FuncNotFoundException | ErrorException $exception) {
             if (!DEMON_INAJAX && !DEMON_SUBMIT && !app()->isDebug())
                 return admin_view('preset.error.general', ['code' => DEMON_CODE_SERVER, 'message' => env('app.debug') ? $exception->getMessage() : admin_error(DEMON_CODE_SERVER)]);
             throw $exception;
