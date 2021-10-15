@@ -16,7 +16,7 @@ class AllotModel extends BaseModel
         if ($add = array_diff($rids, $now)) {
             foreach ($add as $key => $rid)
                 $add[$key] = ['uid' => $uid, 'rid' => $rid, 'createTime' => mstime()];
-            $add = self::insert($add);
+            $add = self::insertAll($add);
         }
 
         if ($del = array_diff($now, $rids))

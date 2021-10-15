@@ -583,7 +583,7 @@ class DBTable
                         if (!($val->searchable ?? false) || !($val->field ?? null))
                             continue;
                         $field = explode(' ', $this->field[$val->field] ?? $val->field)[0];
-                        $query->orWhere($field, 'like', "%{$text}%");
+                        $query->whereOr($field, 'like', "%{$text}%");
                         $list[$field] = $text;
                     }
                 });

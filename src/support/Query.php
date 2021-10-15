@@ -92,6 +92,6 @@ class Query extends \think\db\Query
      */
     public function getColumnListing()
     {
-        return array_keys($this->getFields($this->getOptions('table')));
+        return array_keys($this->getFields($this->getTable()));
     }
 }
