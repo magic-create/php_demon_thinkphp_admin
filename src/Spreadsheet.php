@@ -121,7 +121,7 @@ class Spreadsheet
         $this->_config['height'] = $this->_config['height'] ?? 20;
         $this->_config['width'] = $this->_config['width'] ?? [];
         $this->_config['format'] = $this->_config['format'] ?? [];
-        $this->_config['cache'] = $this->_config['cache'] ?? storage_path('admin/sheet/cache');
+        $this->_config['cache'] = $this->_config['cache'] ?? runtime_path('admin/sheet/cache');
 
         return $this;
     }

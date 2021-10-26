@@ -73,7 +73,7 @@ function admin_view($view = null, $data = [], $mergeData = [])
  */
 function admin_url($path = null, $parameters = [], $domain = true)
 {
-    return ($domain ? request()->domain(true) : '') . '/' . config('admin.path') . ($path ? '/' . ltrim($path, '/') : '') . ($parameters ? ((strpos($path, '?') !== false) ? '&' : '?') . http_build_query($parameters) : '');
+    return ($domain ? request()->domain(false) : '') . '/' . config('admin.path') . ($path ? '/' . ltrim($path, '/') : '') . ($parameters ? ((strpos($path, '?') !== false) ? '&' : '?') . http_build_query($parameters) : '');
 }
 
 /**

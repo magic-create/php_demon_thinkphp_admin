@@ -73,7 +73,7 @@ class MenuTable extends DBTable
 
     public function setQuery()
     {
-        return (new MenuModel)->newQuery;
+        return (new MenuModel)->newQuery();
     }
 
     public function setFormat()
