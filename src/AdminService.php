@@ -111,7 +111,7 @@ class AdminService extends Service
         $list = glob(realpath($path) . DIRECTORY_SEPARATOR . $this->app->lang->getLangSet() . DIRECTORY_SEPARATOR . '*.php');
         $admin = [];
         foreach ($list as $val)
-            $admin = array_merge($admin, [basename($val, substr(strrchr($val, '.'), 0)) => array_change_key_case((new Translation)->parse($val))]);
+            $admin = array_merge($admin, [basename($val, substr(strrchr($val, '.'), 0)) => array_change_key_case((new Translation($this->app))->parse($val))]);
         app('admin.translation')->setLangSet($this->app->lang->getLangSet());
         app('admin.translation')->loaded[$this->app->lang->getLangSet()] = $admin;
 
