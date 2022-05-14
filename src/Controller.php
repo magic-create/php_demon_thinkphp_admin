@@ -158,7 +158,7 @@ abstract class Controller
                 return true;
             //  需要登录
             if (!$this->uid) {
-                if (!DEMON_SUBMIT) {
+                if (!DEMON_SUBMIT && !DEMON_INJSON) {
                     session('admin.login', request()->url(true));
                     abort(response($this->app->make(config('admin.authentication'))->login()));
                 }
@@ -182,9 +182,9 @@ abstract class Controller
         if (config('admin.access')) {
             //  需要权限
             if (!app('admin')->access->intercept($action, $this->accessExcept, $this->accessAssign)) {
-                abort(DEMON_SUBMIT ?
+                abort((DEMON_SUBMIT || DEMON_INJSON) ?
                     json(['code' => DEMON_CODE_ACCESS, 'message' => admin_error(DEMON_CODE_ACCESS)], DEMON_CODE_ACCESS) :
-                    response(admin_view('preset.error.general', ['code' => DEMON_CODE_ACCESS, 'message' => admin_error(DEMON_CODE_ACCESS)]), DEMON_CODE_ACCESS));
+                    response(admin_view('preset.error.general', ['code' => DEMON_CODE_ACCESS, 'message' => admin_error(DEMON_CODE_ACCESS), 'data' => ['javascript' => 'window.location.href=window.location.href;window.location.reload;']]), DEMON_CODE_ACCESS));
             }
         }
     }
@@ -200,7 +200,7 @@ abstract class Controller
     public function __tabs($action)
     {
         //  开启判断
-        if (config('admin.tabs') && !DEMON_SUBMIT && !DEMON_INAJAX) {
+        if (config('admin.tabs') && !DEMON_SUBMIT && !DEMON_INAJAX && !DEMON_INJSON) {
             //  携带框架标记并且不是授权相关功能，或者是首页但没有携带框架标记
             if ((admin_tabs('frame') || (request()->baseUrl(true) == admin_url() && !admin_tabs(null))) && get_called_class() != config('admin.authentication')) {
                 //  获取用户菜单信息

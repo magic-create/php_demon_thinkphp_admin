@@ -181,7 +181,7 @@ class Service
         $field = ['a.*', 'b.nickname as inviteNickname'];
         $query = DB::connect(self::connection())
                    ->table([self::MasterModel => 'a'])
-                   ->leftJoin([self::MasterModel => 'b'], 'b.uid', '=', 'a.inviteUid')
+                   ->leftJoin([self::MasterModel => 'b'], 'b.uid = a.inviteUid')
                    ->where('a.uid', $uid);
         $credit = self::fieldStore('credit');
         foreach ($credit as $type => $v) {
@@ -191,6 +191,7 @@ class Service
         }
         $info = $query->field($field)->find();
         if ($info) {
+            $info = bomber()->arrayToObject($info);
             $info->avatar = $info->avatar ? : bomber()->strImage($info->nickname, 'svg', ['calc' => true, 'substr' => true]);
             $info->hobby = explode(',', $info->hobby);
             foreach ($credit as $type => $v)
@@ -218,9 +219,9 @@ class Service
         $reData = app('admin')->api->validator([
             'nickname' => ['rule' => 'require|min:2|max:16', 'message' => '请输入2至16个字的用户昵称'],
             'level' => ['rule' => 'require|number|in:' . implode(',', array_keys($store['level'])), 'message' => '请选择正确的等级'],
-            'sex' => ['rule' => 'require|number|in:' . implode(',', array_keys($store['sex'])), 'message' => '请选择正确的性别'],
+            'sex' => ['rule' => 'in:' . implode(',', array_keys($store['sex'])), 'message' => '请选择正确的性别'],
             'birthday' => ['rule' => 'require|date', 'message' => '请输入正确的生日'],
-            'intro' => ['rule' => 'require|string', 'message' => '请输入正确的简介'],
+            'intro' => ['rule' => 'require', 'message' => '请输入正确的简介'],
         ], [], [], $data);
         if (!error_check($reData))
             return $reData;
