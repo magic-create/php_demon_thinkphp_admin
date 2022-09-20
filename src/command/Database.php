@@ -336,6 +336,7 @@ CREATE TABLE IF NOT EXISTS `admin_user` (
   `updateTime` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
   `loginTime` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `activeTime` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '最后活跃时间',
+  `passwordTime` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '最后改密时间',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `admin_user_username_unique` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
