@@ -92,6 +92,13 @@ class DBTable
     public $data = [];
 
     /**
+
+     * @var int 设置总数
+     */
+    public $count = 0;
+
+    /**
+
      * @var bool 结果强制转换为对象
      */
     public $object = false;
@@ -1088,7 +1095,7 @@ class DBTable
      */
     public function count()
     {
-        return $this->static ? count($this->data) : $this->getQuery(0)->count();
+        return $this->static ? ($this->count ? : count($this->data)) : $this->getQuery(0)->count();
     }
 
     /**
